@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: in-memory-db-scheduler
+  namespace: revolutio
+  name: in-memory-db-scheduler
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: in-memory-db-scheduler
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        service: in-memory-db-scheduler
+    spec:
+      containers:
+      - image: revolutio.azurecr.io/revolutio_kubernetes/redis:latest
+        name: in-memory-db-scheduler
+        #resources:
+        #    requests:
+        #      cpu: 1.0
+        #      memory: 4Gi
+        #    limits:
+        #      cpu: 2.0
+        #      memory: 8Gi
+        command:
+          - redis-server
+        args: ['--requirepass', '$(REDIS_PASSWORD_SCHEDULER)']
+        envFrom:
+          - secretRef:
+              name: secrets-in-memory-db
+        env:
+          - name: REDIS_PASSWORD_SCHEDULER
+            value: $(REDIS_PASSWORD_SCHEDULER)
+          - name: TZ
+            value: UTC
+      imagePullSecrets:
+      - name: azure-ocr-pull-secret
+      restartPolicy: Always
+      volumes: null
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: in-memory-db-scheduler
+  namespace: revolutio
+  name: in-memory-db-scheduler
+spec:
+  ports:
+  - name: "6378"
+    protocol: TCP
+    port: 6379
+  selector:
+    service: in-memory-db-scheduler

@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: in-memory-db
+  namespace: revolutio
+  name: in-memory-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: in-memory-db
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        service: in-memory-db
+    spec:
+      containers:
+      - image: revolutio.azurecr.io/revolutio_kubernetes/keydb:latest
+        name: in-memory-db
+        #resources:
+        #    requests:
+        #      cpu: 0.25
+        #      memory: 0.5Gi
+        #    limits:
+        #      cpu: 0.5
+        #      memory: 1Gi
+        command:
+          - keydb-server
+        args: ['--requirepass', '$(KEYDB_PASSWORD)']
+        envFrom:
+          - secretRef:
+              name: secrets-in-memory-db
+        env:
+          - name: KEYDB_PASSWORD
+            value: $(KEYDB_PASSWORD)
+      restartPolicy: Always
+      volumes: null
+      imagePullSecrets:
+      - name: azure-ocr-pull-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: in-memory-db
+  namespace: revolutio
+  name: in-memory-db
+spec:
+  ports:
+  - name: "6378"
+    protocol: TCP
+    port: 6379
+  selector:
+    service: in-memory-db

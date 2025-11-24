@@ -1,0 +1,55 @@
+sudo apt update
+sudo apt install -y qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virt-manager dnsmasq
+
+#Commands to start and monitor openshift cluster
+crc start
+crc status
+crc stop
+crc delete
+
+#Command to start openshift and keep it alive delinking from client
+nohup crc start &
+
+#Command to autostart when VM is turned on
+sudo nano /etc/systemd/system/crc.service
+
+sudo systemctl daemon-reexec
+sudo systemctl daemon-reload
+sudo systemctl enable crc
+sudo systemctl start crc
+
+
+
+
+Credentials:
+Log in as administrator:
+  Username: kubeadmin
+  Password: xAKff-nfXDE-SGdta-IGheX
+
+Log in as user:
+  Username: developer
+  Password: developer
+
+Local PC hosts to add
+40.81.244.162 oauth-openshift.apps-crc.testing
+40.81.244.162 console-openshift-console.apps-crc.testing
+40.81.244.162 api.crc.testing
+
+oc login commands:
+oc login -u kubeadmin -p dnUL9-aVRBu-bgKsk-MYuJK https://api.crc.testing:6443
+oc login -u developer -p developer https://api.crc.testing:6443
+
+
+#new project creation
+oc new-project revolutio
+
+#register your image repository
+Login with docker
+Create yaml for pull secret with docker config file path
+Apply yaml
+
+#Create secret and deployment
+oc apply -f ./in-memory-db.yaml
+
+#Check pod status
+oc get pods -n revolutio
