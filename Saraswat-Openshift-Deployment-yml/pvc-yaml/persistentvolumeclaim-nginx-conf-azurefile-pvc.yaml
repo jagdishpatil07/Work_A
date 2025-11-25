@@ -1,0 +1,64 @@
+﻿kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: nginx-conf-azurefile-pvc
+  namespace: tprms
+  uid: e0be4c33-039a-4340-868b-995ff36d9207
+  resourceVersion: '428872595'
+  creationTimestamp: '2025-06-13T12:17:34Z'
+  annotations:
+    pv.kubernetes.io/bind-completed: 'yes'
+  finalizers:
+    - kubernetes.io/pvc-protection
+  managedFields:
+    - manager: kubectl-create
+      operation: Update
+      apiVersion: v1
+      time: '2025-06-13T12:17:34Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:spec':
+          'f:accessModes': {}
+          'f:resources':
+            'f:requests':
+              .: {}
+              'f:storage': {}
+          'f:volumeMode': {}
+          'f:volumeName': {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: v1
+      time: '2025-06-13T12:17:38Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:pv.kubernetes.io/bind-completed': {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: v1
+      time: '2025-06-13T12:17:38Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          'f:accessModes': {}
+          'f:capacity':
+            .: {}
+            'f:storage': {}
+          'f:phase': {}
+      subresource: status
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+  volumeName: nginx-conf-azurefile-pv
+  volumeMode: Filesystem
+status:
+  phase: Bound
+  accessModes:
+    - ReadWriteMany
+  capacity:
+    storage: 1Gi

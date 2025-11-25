@@ -1,0 +1,71 @@
+﻿kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: pv-logs
+  uid: 3f94f8de-80c2-4e14-8371-5e3de702328c
+  resourceVersion: '219056078'
+  creationTimestamp: '2024-11-19T09:33:07Z'
+  finalizers:
+    - kubernetes.io/pv-protection
+  managedFields:
+    - manager: Mozilla
+      operation: Update
+      apiVersion: v1
+      time: '2024-11-19T09:33:07Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:spec':
+          'f:accessModes': {}
+          'f:capacity':
+            .: {}
+            'f:storage': {}
+          'f:claimRef':
+            .: {}
+            'f:apiVersion': {}
+            'f:kind': {}
+            'f:name': {}
+            'f:namespace': {}
+          'f:nfs':
+            .: {}
+            'f:path': {}
+            'f:server': {}
+          'f:persistentVolumeReclaimPolicy': {}
+          'f:volumeMode': {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: v1
+      time: '2024-11-19T09:34:20Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:spec':
+          'f:claimRef':
+            'f:resourceVersion': {}
+            'f:uid': {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: v1
+      time: '2024-11-19T09:34:20Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          'f:phase': {}
+      subresource: status
+spec:
+  capacity:
+    storage: 2Gi
+  nfs:
+    server: 192.168.1.110
+    path: /var/pv-logs
+  accessModes:
+    - ReadWriteMany
+  claimRef:
+    kind: PersistentVolumeClaim
+    namespace: saraswat-development
+    name: pvc-logs
+    uid: 233e0f55-b92d-437f-8dfa-7cc69fb46d6b
+    apiVersion: v1
+    resourceVersion: '219056076'
+  persistentVolumeReclaimPolicy: Retain
+  volumeMode: Filesystem
+status:
+  phase: Bound

@@ -1,0 +1,259 @@
+﻿kind: Deployment
+apiVersion: apps/v1
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: '9'
+  resourceVersion: '508969499'
+  name: worker-computation-0
+  uid: 0938e3b0-e7a4-4f3e-9dbe-8ff93e0799fe
+  creationTimestamp: '2025-08-07T07:14:13Z'
+  generation: 9
+  managedFields:
+    - manager: kubectl-create
+      operation: Update
+      apiVersion: apps/v1
+      time: '2025-08-07T07:14:13Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:labels':
+            .: {}
+            'f:service': {}
+        'f:spec':
+          'f:progressDeadlineSeconds': {}
+          'f:replicas': {}
+          'f:revisionHistoryLimit': {}
+          'f:selector': {}
+          'f:strategy':
+            'f:rollingUpdate':
+              .: {}
+              'f:maxSurge': {}
+              'f:maxUnavailable': {}
+            'f:type': {}
+          'f:template':
+            'f:metadata':
+              'f:labels':
+                .: {}
+                'f:service': {}
+            'f:spec':
+              'f:containers':
+                'k:{"name":"worker-computation-0"}':
+                  'f:envFrom': {}
+                  'f:image': {}
+                  'f:terminationMessagePolicy': {}
+                  .: {}
+                  'f:resources':
+                    .: {}
+                    'f:limits':
+                      .: {}
+                      'f:cpu': {}
+                      'f:memory': {}
+                    'f:requests':
+                      .: {}
+                      'f:cpu': {}
+                      'f:memory': {}
+                  'f:args': {}
+                  'f:env':
+                    .: {}
+                    'k:{"name":"DATABASE_URL"}':
+                      .: {}
+                      'f:name': {}
+                      'f:value': {}
+                    'k:{"name":"REDIS_URL"}':
+                      .: {}
+                      'f:name': {}
+                      'f:value': {}
+                  'f:terminationMessagePath': {}
+                  'f:imagePullPolicy': {}
+                  'f:name': {}
+              'f:dnsPolicy': {}
+              'f:restartPolicy': {}
+              'f:schedulerName': {}
+              'f:securityContext': {}
+              'f:terminationGracePeriodSeconds': {}
+    - manager: Mozilla
+      operation: Update
+      apiVersion: apps/v1
+      time: '2025-08-07T07:16:10Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:spec':
+          'f:template':
+            'f:spec':
+              'f:containers':
+                'k:{"name":"worker-computation-0"}':
+                  'f:volumeMounts':
+                    .: {}
+                    'k:{"mountPath":"/opt/revolutio/Computation_Temp_Storage"}':
+                      .: {}
+                      'f:mountPath': {}
+                      'f:name': {}
+                    'k:{"mountPath":"/opt/revolutio/Core/templates/user_defined_template"}':
+                      .: {}
+                      'f:mountPath': {}
+                      'f:name': {}
+                    'k:{"mountPath":"/opt/revolutio/Platform_Configs"}':
+                      .: {}
+                      'f:mountPath': {}
+                      'f:name': {}
+                    'k:{"mountPath":"/opt/revolutio/static"}':
+                      .: {}
+                      'f:mountPath': {}
+                      'f:name': {}
+              'f:volumes':
+                .: {}
+                'k:{"name":"computation-storage-azurefile-pvc"}':
+                  .: {}
+                  'f:name': {}
+                  'f:persistentVolumeClaim':
+                    .: {}
+                    'f:claimName': {}
+                'k:{"name":"platformconfig-azurefile-pvc"}':
+                  .: {}
+                  'f:name': {}
+                  'f:persistentVolumeClaim':
+                    .: {}
+                    'f:claimName': {}
+                'k:{"name":"static-azurefile-pvc"}':
+                  .: {}
+                  'f:name': {}
+                  'f:persistentVolumeClaim':
+                    .: {}
+                    'f:claimName': {}
+                'k:{"name":"templates-azurefile-pvc"}':
+                  .: {}
+                  'f:name': {}
+                  'f:persistentVolumeClaim':
+                    .: {}
+                    'f:claimName': {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: apps/v1
+      time: '2025-08-25T18:02:57Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:deployment.kubernetes.io/revision': {}
+        'f:status':
+          'f:availableReplicas': {}
+          'f:conditions':
+            .: {}
+            'k:{"type":"Available"}':
+              .: {}
+              'f:lastTransitionTime': {}
+              'f:lastUpdateTime': {}
+              'f:message': {}
+              'f:reason': {}
+              'f:status': {}
+              'f:type': {}
+            'k:{"type":"Progressing"}':
+              .: {}
+              'f:lastTransitionTime': {}
+              'f:lastUpdateTime': {}
+              'f:message': {}
+              'f:reason': {}
+              'f:status': {}
+              'f:type': {}
+          'f:observedGeneration': {}
+          'f:readyReplicas': {}
+          'f:replicas': {}
+          'f:updatedReplicas': {}
+      subresource: status
+  namespace: tprms
+  labels:
+    service: worker-computation-0
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: worker-computation-0
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        service: worker-computation-0
+    spec:
+      volumes:
+        - name: static-azurefile-pvc
+          persistentVolumeClaim:
+            claimName: static-azurefile-pvc
+        - name: templates-azurefile-pvc
+          persistentVolumeClaim:
+            claimName: templates-azurefile-pvc
+        - name: platformconfig-azurefile-pvc
+          persistentVolumeClaim:
+            claimName: platformconfig-azurefile-pvc
+        - name: computation-storage-azurefile-pvc
+          persistentVolumeClaim:
+            claimName: computation-storage-azurefile-pvc
+      containers:
+        - resources:
+            limits:
+              cpu: '2'
+              memory: 4Gi
+            requests:
+              cpu: '1'
+              memory: 2Gi
+          terminationMessagePath: /dev/termination-log
+          name: worker-computation-0
+          env:
+            - name: DATABASE_URL
+              value: 'postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(POSTGRES_HOST):$(POSTGRES_PORT)/$(POSTGRES_DB)'
+            - name: REDIS_URL
+              value: $(REDIS_URL)
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: static-azurefile-pvc
+              mountPath: /opt/revolutio/static
+            - name: templates-azurefile-pvc
+              mountPath: /opt/revolutio/Core/templates/user_defined_template
+            - name: platformconfig-azurefile-pvc
+              mountPath: /opt/revolutio/Platform_Configs
+            - name: computation-storage-azurefile-pvc
+              mountPath: /opt/revolutio/Computation_Temp_Storage
+          terminationMessagePolicy: File
+          envFrom:
+            - configMapRef:
+                name: envs-production-web
+            - configMapRef:
+                name: envs-production-postgres-new
+            - secretRef:
+                name: secrets-production-web
+            - secretRef:
+                name: secrets-production-postgres-new
+          image: 'repo.vinsys.com/revolutio:latest'
+          args:
+            - /rqworker/start-computation-0
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+status:
+  observedGeneration: 9
+  replicas: 1
+  updatedReplicas: 1
+  readyReplicas: 1
+  availableReplicas: 1
+  conditions:
+    - type: Progressing
+      status: 'True'
+      lastUpdateTime: '2025-08-19T07:09:23Z'
+      lastTransitionTime: '2025-08-19T07:09:23Z'
+      reason: NewReplicaSetAvailable
+      message: ReplicaSet "worker-computation-0-7dfd847b57" has successfully progressed.
+    - type: Available
+      status: 'True'
+      lastUpdateTime: '2025-08-25T18:02:57Z'
+      lastTransitionTime: '2025-08-25T18:02:57Z'
+      reason: MinimumReplicasAvailable
+      message: Deployment has minimum availability.

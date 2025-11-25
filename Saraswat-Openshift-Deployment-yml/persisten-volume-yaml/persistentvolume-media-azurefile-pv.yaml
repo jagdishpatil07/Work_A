@@ -1,0 +1,76 @@
+﻿kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: media-azurefile-pv
+  uid: bd2ebab7-d3fb-4559-ae66-3ab6458cf3a7
+  resourceVersion: '428870938'
+  creationTimestamp: '2025-06-13T12:14:49Z'
+  annotations:
+    pv.kubernetes.io/bound-by-controller: 'yes'
+  finalizers:
+    - kubernetes.io/pv-protection
+  managedFields:
+    - manager: kubectl-create
+      operation: Update
+      apiVersion: v1
+      time: '2025-06-13T12:14:49Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:spec':
+          'f:accessModes': {}
+          'f:capacity':
+            .: {}
+            'f:storage': {}
+          'f:nfs':
+            .: {}
+            'f:path': {}
+            'f:server': {}
+          'f:persistentVolumeReclaimPolicy': {}
+          'f:volumeMode': {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: v1
+      time: '2025-06-13T12:15:16Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:pv.kubernetes.io/bound-by-controller': {}
+        'f:spec':
+          'f:claimRef':
+            .: {}
+            'f:apiVersion': {}
+            'f:kind': {}
+            'f:name': {}
+            'f:namespace': {}
+            'f:resourceVersion': {}
+            'f:uid': {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: v1
+      time: '2025-06-13T12:15:16Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          'f:phase': {}
+      subresource: status
+spec:
+  capacity:
+    storage: 1Gi
+  nfs:
+    server: 192.168.1.110
+    path: /var/media-azurefile
+  accessModes:
+    - ReadWriteMany
+  claimRef:
+    kind: PersistentVolumeClaim
+    namespace: tprms
+    name: media-azurefile-pvc
+    uid: eb3b875e-a8ac-4f3b-88d6-c333c097739c
+    apiVersion: v1
+    resourceVersion: '428870936'
+  persistentVolumeReclaimPolicy: Retain
+  volumeMode: Filesystem
+status:
+  phase: Bound

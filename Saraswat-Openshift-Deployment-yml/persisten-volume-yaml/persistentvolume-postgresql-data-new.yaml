@@ -1,0 +1,79 @@
+﻿kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: postgresql-data-new
+  uid: 919df1be-1b1c-4155-b992-9fa600af7e2a
+  resourceVersion: '495999937'
+  creationTimestamp: '2025-08-13T12:35:30Z'
+  annotations:
+    pv.kubernetes.io/bound-by-controller: 'yes'
+  finalizers:
+    - kubernetes.io/pv-protection
+  managedFields:
+    - manager: kubectl-create
+      operation: Update
+      apiVersion: v1
+      time: '2025-08-13T12:35:30Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:pv.kubernetes.io/bound-by-controller': {}
+          'f:finalizers':
+            .: {}
+            'v:"kubernetes.io/pv-protection"': {}
+        'f:spec':
+          'f:accessModes': {}
+          'f:capacity':
+            .: {}
+            'f:storage': {}
+          'f:nfs':
+            .: {}
+            'f:path': {}
+            'f:server': {}
+          'f:persistentVolumeReclaimPolicy': {}
+          'f:volumeMode': {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: v1
+      time: '2025-08-13T12:35:58Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:spec':
+          'f:claimRef':
+            .: {}
+            'f:apiVersion': {}
+            'f:kind': {}
+            'f:name': {}
+            'f:namespace': {}
+            'f:resourceVersion': {}
+            'f:uid': {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: v1
+      time: '2025-08-13T12:35:58Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          'f:phase': {}
+      subresource: status
+spec:
+  capacity:
+    storage: 1Gi
+  nfs:
+    server: 192.168.1.110
+    path: /var/postgresql-data-new
+  accessModes:
+    - ReadWriteMany
+  claimRef:
+    kind: PersistentVolumeClaim
+    namespace: tprms
+    name: postgresql-data-new
+    uid: 1e4a13c7-91b2-4858-b330-15050f5b30a0
+    apiVersion: v1
+    resourceVersion: '495999933'
+  persistentVolumeReclaimPolicy: Retain
+  volumeMode: Filesystem
+status:
+  phase: Bound

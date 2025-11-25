@@ -1,0 +1,20 @@
+﻿kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: nginx-ingress-ingress-nginx-controller
+  namespace: tprms
+  uid: 56a6d749-bbc8-45dc-af17-ee1744d05081
+  resourceVersion: '426665980'
+  creationTimestamp: '2025-06-11T08:20:06Z'
+  managedFields:
+    - manager: Mozilla
+      operation: Update
+      apiVersion: v1
+      time: '2025-06-11T08:20:06Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:data':
+          .: {}
+          'f:use-forwarded-headers': {}
+data:
+  use-forwarded-headers: ..

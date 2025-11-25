@@ -1,0 +1,20 @@
+﻿kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: sc-saraswat
+  uid: 126ff0cc-b733-49e7-bb70-f72905f390b2
+  resourceVersion: '437973'
+  creationTimestamp: '2024-03-25T15:27:19Z'
+  managedFields:
+    - manager: Mozilla
+      operation: Update
+      apiVersion: storage.k8s.io/v1
+      time: '2024-03-25T15:27:19Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:provisioner': {}
+        'f:reclaimPolicy': {}
+        'f:volumeBindingMode': {}
+provisioner: kubernetes.io/no-provisioner
+reclaimPolicy: Delete
+volumeBindingMode: WaitForFirstConsumer

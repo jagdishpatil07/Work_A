@@ -1,0 +1,82 @@
+﻿kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: envs-production-web
+  namespace: tprms
+  uid: 1e681e8f-7de6-4197-ac40-95cdec61d596
+  resourceVersion: '503647771'
+  creationTimestamp: '2025-06-11T08:23:18Z'
+  managedFields:
+    - manager: Mozilla
+      operation: Update
+      apiVersion: v1
+      time: '2025-08-20T12:29:00Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:data':
+          'f:REDIS_HOST': {}
+          'f:CLEAR_CACHE_ON_STARTUP': {}
+          'f:NUMBA_CACHE_DIR': {}
+          'f:OPERATION_TYPE': {}
+          'f:DJANGO_SECURE_SSL_REDIRECT': {}
+          'f:KUBERNETES_ENV': {}
+          'f:REDIS_CACHE_LOCATION': {}
+          'f:ACCOUNT_DEFAULT_HTTP_PROTOCOL': {}
+          'f:CDN_CUSTOM_DOMAIN': {}
+          .: {}
+          'f:PLATFORM_DOMAIN_NAME': {}
+          'f:COMPUTATION_QUEUES': {}
+          'f:DJANGO_ADMIN_URL': {}
+          'f:REDIS_PASSWORD_SCHEDULER': {}
+          'f:DJANGO_ACCOUNT_ALLOW_REGISTRATION': {}
+          'f:KEYDB_PASSWORD': {}
+          'f:DJANGO_SUPERUSER_EMAIL': {}
+          'f:REDIS_URL_SCHEDULER': {}
+          'f:REDIS_PASSWORD': {}
+          'f:PORT_NUMBER': {}
+          'f:WEB_CONCURRENCY': {}
+          'f:REDIS_PORT_SCHEDULER': {}
+          'f:MPLCONFIGDIR': {}
+          'f:REDIS_URL': {}
+          'f:DJANGO_SETTINGS_MODULE': {}
+          'f:REDIS_PORT': {}
+          'f:FILE_NAME': {}
+          'f:SCHEDULER_AUTOSTART': {}
+          'f:REDIS_HOST_SCHEDULER': {}
+          'f:DJANGO_SESSION_COOKIE_AGE': {}
+          'f:CDN_CUSTOM_LOCATION': {}
+          'f:CSRF_TRUSTED_ORIGINS': {}
+          'f:DJANGO_SUPERUSER_USERNAME': {}
+data:
+  CDN_CUSTOM_DOMAIN: ''
+  REDIS_PORT_SCHEDULER: '6379'
+  MPLCONFIGDIR: /opt/temp
+  DJANGO_SETTINGS_MODULE: config.settings.local
+  DJANGO_ACCOUNT_ALLOW_REGISTRATION: 'true'
+  REDIS_PORT: '6379'
+  PORT_NUMBER: '443'
+  REDIS_URL_SCHEDULER: 'redis://:redisschedulersecretpassword@redis-scheduler:6379/0'
+  REDIS_HOST_SCHEDULER: redis-scheduler
+  WEB_CONCURRENCY: '4'
+  CSRF_TRUSTED_ORIGINS: 'https://*.vinsys.live'
+  REDIS_URL: 'redis://:redissecretpassword@redis:6379/0'
+  CLEAR_CACHE_ON_STARTUP: 'true'
+  REDIS_HOST: redis
+  FILE_NAME: /etc/nginx/nginx.conf
+  SCHEDULER_AUTOSTART: 'true'
+  CDN_CUSTOM_LOCATION: static
+  DJANGO_SESSION_COOKIE_AGE: '86400'
+  OPERATION_TYPE: application_run
+  DJANGO_SECURE_SSL_REDIRECT: 'no'
+  DJANGO_SUPERUSER_USERNAME: revolutio_admin
+  KUBERNETES_ENV: 'true'
+  NUMBA_CACHE_DIR: /temp
+  REDIS_CACHE_LOCATION: 'redis://:rediskeydbsecretpassword@keydb:6379'
+  COMPUTATION_QUEUES: '2'
+  PLATFORM_DOMAIN_NAME: revolutio.digital
+  DJANGO_ADMIN_URL: nxB0AWFHi204T2g7VxhVxJ5UYKMBQIjl/
+  REDIS_PASSWORD_SCHEDULER: redisschedulersecretpassword
+  KEYDB_PASSWORD: rediskeydbsecretpassword
+  REDIS_PASSWORD: redissecretpassword
+  ACCOUNT_DEFAULT_HTTP_PROTOCOL: https
+  DJANGO_SUPERUSER_EMAIL: contact@acies.holdings

@@ -1,0 +1,61 @@
+﻿kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: postgresql-backups-new
+  namespace: tprms
+  uid: fca66ccd-1963-4911-8a8f-55e5a399315f
+  resourceVersion: '496000895'
+  creationTimestamp: '2025-08-13T12:36:55Z'
+  annotations:
+    pv.kubernetes.io/bind-completed: 'yes'
+  finalizers:
+    - kubernetes.io/pvc-protection
+  managedFields:
+    - manager: kubectl-create
+      operation: Update
+      apiVersion: v1
+      time: '2025-08-13T12:36:55Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:pv.kubernetes.io/bind-completed': {}
+          'f:finalizers':
+            .: {}
+            'v:"kubernetes.io/pvc-protection"': {}
+        'f:spec':
+          'f:accessModes': {}
+          'f:resources':
+            'f:requests':
+              .: {}
+              'f:storage': {}
+          'f:volumeMode': {}
+          'f:volumeName': {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: v1
+      time: '2025-08-13T12:37:08Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          'f:accessModes': {}
+          'f:capacity':
+            .: {}
+            'f:storage': {}
+          'f:phase': {}
+      subresource: status
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+  volumeName: postgresql-backups-new
+  volumeMode: Filesystem
+status:
+  phase: Bound
+  accessModes:
+    - ReadWriteMany
+  capacity:
+    storage: 1Gi

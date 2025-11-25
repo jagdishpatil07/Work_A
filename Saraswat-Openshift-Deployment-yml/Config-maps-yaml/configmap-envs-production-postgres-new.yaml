@@ -1,0 +1,30 @@
+﻿kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: envs-production-postgres-new
+  namespace: tprms
+  uid: b32532fe-e6ce-40a2-bb68-5650ae18a231
+  resourceVersion: '501545091'
+  creationTimestamp: '2025-06-11T08:22:26Z'
+  managedFields:
+    - manager: Mozilla
+      operation: Update
+      apiVersion: v1
+      time: '2025-08-18T11:51:29Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:data':
+          .: {}
+          'f:DATABASE_TYPE': {}
+          'f:POSTGRES_DB': {}
+          'f:POSTGRES_HOST': {}
+          'f:POSTGRES_HOST_INNER': {}
+          'f:POSTGRES_PORT': {}
+          'f:POSTGRES_USER': {}
+data:
+  DATABASE_TYPE: PostgreSQL
+  POSTGRES_DB: Platform_DB
+  POSTGRES_HOST: pgbouncer-service
+  POSTGRES_HOST_INNER: postgres15-new
+  POSTGRES_PORT: '5432'
+  POSTGRES_USER: postgres_user

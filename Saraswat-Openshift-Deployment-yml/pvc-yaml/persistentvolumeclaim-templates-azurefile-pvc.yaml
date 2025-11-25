@@ -1,0 +1,64 @@
+﻿kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: templates-azurefile-pvc
+  namespace: tprms
+  uid: 6942158f-49b6-4352-b460-b7512c4407c6
+  resourceVersion: '428887633'
+  creationTimestamp: '2025-06-13T12:39:11Z'
+  annotations:
+    pv.kubernetes.io/bind-completed: 'yes'
+  finalizers:
+    - kubernetes.io/pvc-protection
+  managedFields:
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: v1
+      time: '2025-06-13T12:39:11Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:pv.kubernetes.io/bind-completed': {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: v1
+      time: '2025-06-13T12:39:11Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          'f:accessModes': {}
+          'f:capacity':
+            .: {}
+            'f:storage': {}
+          'f:phase': {}
+      subresource: status
+    - manager: kubectl-create
+      operation: Update
+      apiVersion: v1
+      time: '2025-06-13T12:39:11Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:spec':
+          'f:accessModes': {}
+          'f:resources':
+            'f:requests':
+              .: {}
+              'f:storage': {}
+          'f:volumeMode': {}
+          'f:volumeName': {}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+  volumeName: templates-azurefile-pv
+  volumeMode: Filesystem
+status:
+  phase: Bound
+  accessModes:
+    - ReadWriteMany
+  capacity:
+    storage: 1Gi

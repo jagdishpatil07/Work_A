@@ -1,0 +1,318 @@
+﻿kind: Deployment
+apiVersion: apps/v1
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: '23'
+  resourceVersion: '537664828'
+  name: web
+  uid: b96bc17b-1dec-4929-ba11-b4c4730a75fe
+  creationTimestamp: '2025-08-07T07:43:34Z'
+  generation: 31
+  managedFields:
+    - manager: kubectl-create
+      operation: Update
+      apiVersion: apps/v1
+      time: '2025-08-07T07:43:34Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:labels':
+            .: {}
+            'f:service': {}
+        'f:spec':
+          'f:progressDeadlineSeconds': {}
+          'f:revisionHistoryLimit': {}
+          'f:selector': {}
+          'f:strategy':
+            'f:rollingUpdate':
+              .: {}
+              'f:maxSurge': {}
+              'f:maxUnavailable': {}
+            'f:type': {}
+          'f:template':
+            'f:metadata':
+              'f:labels':
+                .: {}
+                'f:service': {}
+            'f:spec':
+              'f:containers':
+                'k:{"name":"web"}':
+                  'f:envFrom': {}
+                  'f:image': {}
+                  'f:terminationMessagePolicy': {}
+                  .: {}
+                  'f:resources':
+                    .: {}
+                    'f:limits': {}
+                    'f:requests': {}
+                  'f:args': {}
+                  'f:env':
+                    .: {}
+                    'k:{"name":"DATABASE_URL"}':
+                      .: {}
+                      'f:name': {}
+                      'f:value': {}
+                  'f:readinessProbe':
+                    .: {}
+                    'f:failureThreshold': {}
+                    'f:httpGet':
+                      .: {}
+                      'f:path': {}
+                      'f:port': {}
+                      'f:scheme': {}
+                    'f:initialDelaySeconds': {}
+                    'f:periodSeconds': {}
+                    'f:successThreshold': {}
+                    'f:timeoutSeconds': {}
+                  'f:terminationMessagePath': {}
+                  'f:imagePullPolicy': {}
+                  'f:ports':
+                    .: {}
+                    'k:{"containerPort":5000,"protocol":"TCP"}':
+                      .: {}
+                      'f:containerPort': {}
+                      'f:name': {}
+                      'f:protocol': {}
+                  'f:name': {}
+              'f:dnsPolicy': {}
+              'f:restartPolicy': {}
+              'f:schedulerName': {}
+              'f:securityContext': {}
+              'f:terminationGracePeriodSeconds': {}
+    - manager: Mozilla
+      operation: Update
+      apiVersion: apps/v1
+      time: '2025-08-25T17:17:40Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:spec':
+          'f:template':
+            'f:spec':
+              'f:containers':
+                'k:{"name":"web"}':
+                  'f:livenessProbe':
+                    .: {}
+                    'f:failureThreshold': {}
+                    'f:httpGet':
+                      .: {}
+                      'f:path': {}
+                      'f:port': {}
+                      'f:scheme': {}
+                    'f:periodSeconds': {}
+                    'f:successThreshold': {}
+                    'f:timeoutSeconds': {}
+                  'f:resources':
+                    'f:limits':
+                      'f:memory': {}
+                    'f:requests':
+                      'f:memory': {}
+                  'f:volumeMounts':
+                    .: {}
+                    'k:{"mountPath":"/opt/revolutio/Computation_Temp_Storage"}':
+                      .: {}
+                      'f:mountPath': {}
+                      'f:name': {}
+                    'k:{"mountPath":"/opt/revolutio/Core/media"}':
+                      .: {}
+                      'f:mountPath': {}
+                      'f:name': {}
+                    'k:{"mountPath":"/opt/revolutio/Core/templates/user_defined_template"}':
+                      .: {}
+                      'f:mountPath': {}
+                      'f:name': {}
+                    'k:{"mountPath":"/opt/revolutio/Platform_Configs"}':
+                      .: {}
+                      'f:mountPath': {}
+                      'f:name': {}
+              'f:volumes':
+                .: {}
+                'k:{"name":"computation-storage-azurefile-pvc"}':
+                  .: {}
+                  'f:name': {}
+                  'f:persistentVolumeClaim':
+                    .: {}
+                    'f:claimName': {}
+                'k:{"name":"media-azurefile-pvc"}':
+                  .: {}
+                  'f:name': {}
+                  'f:persistentVolumeClaim':
+                    .: {}
+                    'f:claimName': {}
+                'k:{"name":"platformconfig-azurefile-pvc"}':
+                  .: {}
+                  'f:name': {}
+                  'f:persistentVolumeClaim':
+                    .: {}
+                    'f:claimName': {}
+                'k:{"name":"templates-azurefile-pvc"}':
+                  .: {}
+                  'f:name': {}
+                  'f:persistentVolumeClaim':
+                    .: {}
+                    'f:claimName': {}
+    - manager: kubectl-edit
+      operation: Update
+      apiVersion: apps/v1
+      time: '2025-08-25T17:37:56Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:spec':
+          'f:template':
+            'f:spec':
+              'f:containers':
+                'k:{"name":"web"}':
+                  'f:resources':
+                    'f:limits':
+                      'f:cpu': {}
+                    'f:requests':
+                      'f:cpu': {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: apps/v1
+      time: '2025-09-29T06:22:22Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:deployment.kubernetes.io/revision': {}
+        'f:status':
+          'f:conditions':
+            .: {}
+            'k:{"type":"Available"}':
+              .: {}
+              'f:lastTransitionTime': {}
+              'f:lastUpdateTime': {}
+              'f:message': {}
+              'f:reason': {}
+              'f:status': {}
+              'f:type': {}
+            'k:{"type":"Progressing"}':
+              .: {}
+              'f:lastTransitionTime': {}
+              'f:lastUpdateTime': {}
+              'f:message': {}
+              'f:reason': {}
+              'f:status': {}
+              'f:type': {}
+          'f:observedGeneration': {}
+          'f:replicas': {}
+          'f:unavailableReplicas': {}
+          'f:updatedReplicas': {}
+      subresource: status
+  namespace: tprms
+  labels:
+    service: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: web
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        service: web
+    spec:
+      volumes:
+        - name: templates-azurefile-pvc
+          persistentVolumeClaim:
+            claimName: templates-azurefile-pvc
+        - name: platformconfig-azurefile-pvc
+          persistentVolumeClaim:
+            claimName: platformconfig-azurefile-pvc
+        - name: media-azurefile-pvc
+          persistentVolumeClaim:
+            claimName: media-azurefile-pvc
+        - name: computation-storage-azurefile-pvc
+          persistentVolumeClaim:
+            claimName: computation-storage-azurefile-pvc
+      containers:
+        - resources:
+            limits:
+              cpu: '4'
+              memory: 16Gi
+            requests:
+              cpu: '2'
+              memory: 8Gi
+          readinessProbe:
+            httpGet:
+              path: /readiness
+              port: uvicorn
+              scheme: HTTP
+            initialDelaySeconds: 120
+            timeoutSeconds: 30
+            periodSeconds: 240
+            successThreshold: 1
+            failureThreshold: 4
+          terminationMessagePath: /tmp/web-log
+          name: web
+          livenessProbe:
+            httpGet:
+              path: /healthy
+              port: uvicorn
+              scheme: HTTP
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          env:
+            - name: DATABASE_URL
+              value: 'postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(POSTGRES_HOST):$(POSTGRES_PORT)/$(POSTGRES_DB)'
+          ports:
+            - name: uvicorn
+              containerPort: 5000
+              protocol: TCP
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: templates-azurefile-pvc
+              mountPath: /opt/revolutio/Core/templates/user_defined_template
+            - name: platformconfig-azurefile-pvc
+              mountPath: /opt/revolutio/Platform_Configs
+            - name: media-azurefile-pvc
+              mountPath: /opt/revolutio/Core/media
+            - name: computation-storage-azurefile-pvc
+              mountPath: /opt/revolutio/Computation_Temp_Storage
+          terminationMessagePolicy: File
+          envFrom:
+            - configMapRef:
+                name: envs-production-web
+            - configMapRef:
+                name: envs-production-postgres-new
+            - secretRef:
+                name: secrets-production-web
+            - secretRef:
+                name: secrets-production-postgres-new
+          image: 'repo.vinsys.com/revolutio:latest'
+          args:
+            - /Installation_ref/scripts/start
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+status:
+  observedGeneration: 31
+  replicas: 1
+  updatedReplicas: 1
+  unavailableReplicas: 1
+  conditions:
+    - type: Progressing
+      status: 'True'
+      lastUpdateTime: '2025-08-25T17:50:58Z'
+      lastTransitionTime: '2025-08-25T16:32:46Z'
+      reason: NewReplicaSetAvailable
+      message: ReplicaSet "web-798485774d" has successfully progressed.
+    - type: Available
+      status: 'False'
+      lastUpdateTime: '2025-08-25T17:51:13Z'
+      lastTransitionTime: '2025-08-25T17:51:13Z'
+      reason: MinimumReplicasUnavailable
+      message: Deployment does not have minimum availability.

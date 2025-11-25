@@ -1,0 +1,20 @@
+﻿kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: envs-production-postgres
+  namespace: tprms
+  uid: cdc54cc8-641b-4b23-94c8-e0119ddc4cfd
+  resourceVersion: '426667016'
+  creationTimestamp: '2025-06-11T08:21:38Z'
+  managedFields:
+    - manager: Mozilla
+      operation: Update
+      apiVersion: v1
+      time: '2025-06-11T08:21:38Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:data':
+          .: {}
+          'f:POSTGRES_HOST_INNER': {}
+data:
+  POSTGRES_HOST_INNER: ....

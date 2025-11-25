@@ -1,0 +1,26 @@
+﻿kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: openshift-service-ca.crt
+  namespace: tprms
+  uid: d0183aad-b2f2-4d33-92d0-0c85e83f16ac
+  resourceVersion: '426664836'
+  creationTimestamp: '2025-06-11T08:18:30Z'
+  annotations:
+    service.beta.openshift.io/inject-cabundle: 'true'
+  managedFields:
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: v1
+      time: '2025-06-11T08:18:30Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:data':
+          .: {}
+          'f:service-ca.crt': {}
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:service.beta.openshift.io/inject-cabundle': {}
+data:
+  service-ca.crt: ''

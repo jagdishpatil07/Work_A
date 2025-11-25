@@ -1,0 +1,20 @@
+﻿kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: envs-production-rqmonitor
+  namespace: tprms
+  uid: dc4bd004-46a1-43a0-ba86-6520d4989fa1
+  resourceVersion: '426667876'
+  creationTimestamp: '2025-06-11T08:22:51Z'
+  managedFields:
+    - manager: Mozilla
+      operation: Update
+      apiVersion: v1
+      time: '2025-06-11T08:22:51Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:data':
+          .: {}
+          'f:REDIS_URL': {}
+data:
+  REDIS_URL: ....

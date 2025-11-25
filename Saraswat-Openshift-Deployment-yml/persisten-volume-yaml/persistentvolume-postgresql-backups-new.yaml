@@ -1,0 +1,79 @@
+﻿kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: postgresql-backups-new
+  uid: 2e7bea26-c8e5-4b02-aad7-533318a28420
+  resourceVersion: '496000708'
+  creationTimestamp: '2025-08-13T12:36:39Z'
+  annotations:
+    pv.kubernetes.io/bound-by-controller: 'yes'
+  finalizers:
+    - kubernetes.io/pv-protection
+  managedFields:
+    - manager: kubectl-create
+      operation: Update
+      apiVersion: v1
+      time: '2025-08-13T12:36:39Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:pv.kubernetes.io/bound-by-controller': {}
+          'f:finalizers':
+            .: {}
+            'v:"kubernetes.io/pv-protection"': {}
+        'f:spec':
+          'f:accessModes': {}
+          'f:capacity':
+            .: {}
+            'f:storage': {}
+          'f:nfs':
+            .: {}
+            'f:path': {}
+            'f:server': {}
+          'f:persistentVolumeReclaimPolicy': {}
+          'f:volumeMode': {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: v1
+      time: '2025-08-13T12:36:55Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:spec':
+          'f:claimRef':
+            .: {}
+            'f:apiVersion': {}
+            'f:kind': {}
+            'f:name': {}
+            'f:namespace': {}
+            'f:resourceVersion': {}
+            'f:uid': {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: v1
+      time: '2025-08-13T12:36:55Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          'f:phase': {}
+      subresource: status
+spec:
+  capacity:
+    storage: 1Gi
+  nfs:
+    server: 192.168.1.110
+    path: /var/postgresql-backups-new
+  accessModes:
+    - ReadWriteMany
+  claimRef:
+    kind: PersistentVolumeClaim
+    namespace: tprms
+    name: postgresql-backups-new
+    uid: fca66ccd-1963-4911-8a8f-55e5a399315f
+    apiVersion: v1
+    resourceVersion: '496000705'
+  persistentVolumeReclaimPolicy: Retain
+  volumeMode: Filesystem
+status:
+  phase: Bound

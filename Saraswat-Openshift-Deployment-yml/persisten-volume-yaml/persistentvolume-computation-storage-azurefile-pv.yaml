@@ -1,0 +1,76 @@
+﻿kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: computation-storage-azurefile-pv
+  uid: 53088169-88cf-4d3a-bf6a-531157b841fb
+  resourceVersion: '428868918'
+  creationTimestamp: '2025-06-13T12:11:14Z'
+  annotations:
+    pv.kubernetes.io/bound-by-controller: 'yes'
+  finalizers:
+    - kubernetes.io/pv-protection
+  managedFields:
+    - manager: kubectl-create
+      operation: Update
+      apiVersion: v1
+      time: '2025-06-13T12:11:14Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:spec':
+          'f:accessModes': {}
+          'f:capacity':
+            .: {}
+            'f:storage': {}
+          'f:nfs':
+            .: {}
+            'f:path': {}
+            'f:server': {}
+          'f:persistentVolumeReclaimPolicy': {}
+          'f:volumeMode': {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: v1
+      time: '2025-06-13T12:12:28Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:pv.kubernetes.io/bound-by-controller': {}
+        'f:spec':
+          'f:claimRef':
+            .: {}
+            'f:apiVersion': {}
+            'f:kind': {}
+            'f:name': {}
+            'f:namespace': {}
+            'f:resourceVersion': {}
+            'f:uid': {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: v1
+      time: '2025-06-13T12:12:28Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          'f:phase': {}
+      subresource: status
+spec:
+  capacity:
+    storage: 1Gi
+  nfs:
+    server: 192.168.1.110
+    path: /var/computation-storage-azurefile
+  accessModes:
+    - ReadWriteMany
+  claimRef:
+    kind: PersistentVolumeClaim
+    namespace: tprms
+    name: computation-storage-azurefile-pvc
+    uid: ef5f9fe6-7fe2-4677-a235-57a5a7f9ae81
+    apiVersion: v1
+    resourceVersion: '428868916'
+  persistentVolumeReclaimPolicy: Retain
+  volumeMode: Filesystem
+status:
+  phase: Bound

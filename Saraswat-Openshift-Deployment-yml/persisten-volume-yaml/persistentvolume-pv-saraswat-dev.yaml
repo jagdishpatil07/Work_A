@@ -1,0 +1,82 @@
+﻿kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: pv-saraswat-dev
+  uid: 31f70edf-073d-4b60-b132-374d07d0791c
+  resourceVersion: '8117222'
+  creationTimestamp: '2024-04-03T10:19:16Z'
+  annotations:
+    pv.kubernetes.io/bound-by-controller: 'yes'
+  finalizers:
+    - kubernetes.io/pv-protection
+  managedFields:
+    - manager: Mozilla
+      operation: Update
+      apiVersion: v1
+      time: '2024-04-03T10:19:16Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:spec':
+          'f:accessModes': {}
+          'f:capacity':
+            .: {}
+            'f:storage': {}
+          'f:mountOptions': {}
+          'f:nfs':
+            .: {}
+            'f:path': {}
+            'f:server': {}
+          'f:persistentVolumeReclaimPolicy': {}
+          'f:storageClassName': {}
+          'f:volumeMode': {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: v1
+      time: '2024-04-04T07:58:04Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:pv.kubernetes.io/bound-by-controller': {}
+        'f:spec':
+          'f:claimRef':
+            .: {}
+            'f:apiVersion': {}
+            'f:kind': {}
+            'f:name': {}
+            'f:namespace': {}
+            'f:resourceVersion': {}
+            'f:uid': {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: v1
+      time: '2024-04-04T07:58:04Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          'f:phase': {}
+      subresource: status
+spec:
+  capacity:
+    storage: 10Gi
+  nfs:
+    server: 192.168.1.110
+    path: /var/pv-saraswat-dev
+  accessModes:
+    - ReadWriteMany
+  claimRef:
+    kind: PersistentVolumeClaim
+    namespace: saraswat-development
+    name: esb-pvc
+    uid: 5499be08-355d-4169-8005-16276ad581a6
+    apiVersion: v1
+    resourceVersion: '8116702'
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: sc-saraswat
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  volumeMode: Filesystem
+status:
+  phase: Bound

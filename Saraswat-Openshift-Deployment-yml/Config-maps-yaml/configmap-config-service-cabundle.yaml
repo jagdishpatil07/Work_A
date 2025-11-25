@@ -1,0 +1,36 @@
+﻿kind: ConfigMap
+apiVersion: v1
+metadata:
+  annotations:
+    service.beta.openshift.io/inject-cabundle: 'true'
+  resourceVersion: '426664870'
+  name: config-service-cabundle
+  uid: 04dd604d-9586-40e3-90a9-171d28bc32c0
+  creationTimestamp: '2025-06-11T08:18:30Z'
+  managedFields:
+    - manager: openshift-pipelines-operator
+      operation: Update
+      apiVersion: v1
+      time: '2025-06-11T08:18:30Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:service.beta.openshift.io/inject-cabundle': {}
+          'f:labels':
+            .: {}
+            'f:app.kubernetes.io/part-of': {}
+          'f:ownerReferences':
+            .: {}
+            'k:{"uid":"2494b16e-47cb-4926-9187-48e0f3bc1ac7"}': {}
+  namespace: tprms
+  ownerReferences:
+    - apiVersion: operator.tekton.dev/v1alpha1
+      kind: TektonInstallerSet
+      name: rhosp-rbac-mrxw7
+      uid: 2494b16e-47cb-4926-9187-48e0f3bc1ac7
+      controller: true
+      blockOwnerDeletion: true
+  labels:
+    app.kubernetes.io/part-of: tekton-pipelines

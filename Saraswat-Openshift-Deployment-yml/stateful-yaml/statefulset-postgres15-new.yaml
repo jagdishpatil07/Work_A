@@ -1,0 +1,221 @@
+﻿kind: StatefulSet
+apiVersion: apps/v1
+metadata:
+  name: postgres15-new
+  namespace: tprms
+  uid: 4648cf1e-97a7-4d25-b567-e1b39a7a7063
+  resourceVersion: '509311069'
+  generation: 10
+  creationTimestamp: '2025-08-13T11:58:06Z'
+  labels:
+    service: postgres15-new
+  managedFields:
+    - manager: kubectl-create
+      operation: Update
+      apiVersion: apps/v1
+      time: '2025-08-13T11:58:06Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:labels':
+            .: {}
+            'f:service': {}
+        'f:spec':
+          'f:persistentVolumeClaimRetentionPolicy':
+            .: {}
+            'f:whenDeleted': {}
+            'f:whenScaled': {}
+          'f:podManagementPolicy': {}
+          'f:replicas': {}
+          'f:revisionHistoryLimit': {}
+          'f:selector': {}
+          'f:serviceName': {}
+          'f:template':
+            'f:metadata':
+              'f:labels':
+                .: {}
+                'f:service': {}
+            'f:spec':
+              'f:containers':
+                'k:{"name":"postgres15"}':
+                  'f:envFrom': {}
+                  'f:image': {}
+                  'f:terminationMessagePolicy': {}
+                  .: {}
+                  'f:resources':
+                    .: {}
+                    'f:limits': {}
+                    'f:requests': {}
+                  'f:args': {}
+                  'f:terminationMessagePath': {}
+                  'f:imagePullPolicy': {}
+                  'f:ports':
+                    .: {}
+                    'k:{"containerPort":5432,"protocol":"TCP"}':
+                      .: {}
+                      'f:containerPort': {}
+                      'f:name': {}
+                      'f:protocol': {}
+                  'f:name': {}
+              'f:dnsPolicy': {}
+              'f:restartPolicy': {}
+              'f:schedulerName': {}
+              'f:securityContext': {}
+              'f:terminationGracePeriodSeconds': {}
+          'f:updateStrategy':
+            'f:rollingUpdate':
+              .: {}
+              'f:partition': {}
+            'f:type': {}
+    - manager: Mozilla
+      operation: Update
+      apiVersion: apps/v1
+      time: '2025-08-18T13:03:49Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:spec':
+          'f:template':
+            'f:spec':
+              'f:containers':
+                'k:{"name":"postgres15"}':
+                  'f:resources':
+                    'f:limits':
+                      'f:cpu': {}
+                      'f:memory': {}
+                    'f:requests':
+                      'f:cpu': {}
+                      'f:memory': {}
+                  'f:volumeMounts':
+                    .: {}
+                    'k:{"mountPath":"/backups"}':
+                      .: {}
+                      'f:mountPath': {}
+                      'f:name': {}
+                    'k:{"mountPath":"/var/lib/postgresql/data"}':
+                      .: {}
+                      'f:mountPath': {}
+                      'f:name': {}
+              'f:volumes':
+                .: {}
+                'k:{"name":"postgresql-backups-new"}':
+                  .: {}
+                  'f:name': {}
+                  'f:persistentVolumeClaim':
+                    .: {}
+                    'f:claimName': {}
+                'k:{"name":"postgresql-data-new"}':
+                  .: {}
+                  'f:name': {}
+                  'f:persistentVolumeClaim':
+                    .: {}
+                    'f:claimName': {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: apps/v1
+      time: '2025-08-26T02:17:26Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          'f:currentReplicas': {}
+          'f:currentRevision': {}
+          'f:updatedReplicas': {}
+          'f:readyReplicas': {}
+          'f:replicas': {}
+          'f:availableReplicas': {}
+          'f:collisionCount': {}
+          'f:observedGeneration': {}
+          'f:updateRevision': {}
+      subresource: status
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: postgres15-new
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        service: postgres15-new
+    spec:
+      volumes:
+        - name: postgresql-data-new
+          persistentVolumeClaim:
+            claimName: postgresql-data-new
+        - name: postgresql-backups-new
+          persistentVolumeClaim:
+            claimName: postgresql-backups-new
+      containers:
+        - resources:
+            limits:
+              cpu: '1'
+              memory: 4Gi
+            requests:
+              cpu: '1'
+              memory: 4Gi
+          terminationMessagePath: /dev/termination-log
+          name: postgres15
+          ports:
+            - name: postgredb
+              containerPort: 5432
+              protocol: TCP
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: postgresql-data-new
+              mountPath: /var/lib/postgresql/data
+            - name: postgresql-backups-new
+              mountPath: /backups
+          terminationMessagePolicy: File
+          envFrom:
+            - configMapRef:
+                name: envs-production-postgres-new
+            - secretRef:
+                name: secrets-production-postgres-new
+          image: 'repo.vinsys.com/postgres_v1beta:latest'
+          args:
+            - '-c'
+            - shared_buffers=3GB
+            - '-c'
+            - work_mem=64MB
+            - '-c'
+            - maintenance_work_mem=1GB
+            - '-c'
+            - effective_io_concurrency=100
+            - '-c'
+            - wal_compression=on
+            - '-c'
+            - max_wal_size=1GB
+            - '-c'
+            - min_wal_size=80MB
+            - '-c'
+            - log_statement=all
+            - '-c'
+            - autovacuum_max_workers=5
+            - '-c'
+            - autovacuum_vacuum_cost_limit=1000
+            - '-c'
+            - idle_in_transaction_session_timeout=240s
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  serviceName: postgres15-new
+  podManagementPolicy: OrderedReady
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      partition: 0
+  revisionHistoryLimit: 10
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Retain
+status:
+  observedGeneration: 10
+  availableReplicas: 1
+  updateRevision: postgres15-new-554bd6fb89
+  currentRevision: postgres15-new-554bd6fb89
+  currentReplicas: 1
+  updatedReplicas: 1
+  replicas: 1
+  collisionCount: 0
+  readyReplicas: 1

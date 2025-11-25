@@ -1,0 +1,91 @@
+﻿kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: pv-saraswat
+  uid: be42edf2-0b98-4e4b-be69-f436510e7338
+  resourceVersion: '777191'
+  creationTimestamp: '2024-03-26T01:38:35Z'
+  labels:
+    type: local
+  annotations:
+    pv.kubernetes.io/bound-by-controller: 'yes'
+  finalizers:
+    - kubernetes.io/pv-protection
+  managedFields:
+    - manager: Mozilla
+      operation: Update
+      apiVersion: v1
+      time: '2024-03-26T01:38:35Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:finalizers':
+            .: {}
+            'v:"kubernetes.io/pv-protection"': {}
+          'f:labels':
+            .: {}
+            'f:type': {}
+        'f:spec':
+          'f:accessModes': {}
+          'f:capacity':
+            .: {}
+            'f:storage': {}
+          'f:mountOptions': {}
+          'f:nfs':
+            .: {}
+            'f:path': {}
+            'f:server': {}
+          'f:persistentVolumeReclaimPolicy': {}
+          'f:storageClassName': {}
+          'f:volumeMode': {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: v1
+      time: '2024-03-26T01:41:27Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:pv.kubernetes.io/bound-by-controller': {}
+        'f:spec':
+          'f:claimRef':
+            .: {}
+            'f:apiVersion': {}
+            'f:kind': {}
+            'f:name': {}
+            'f:namespace': {}
+            'f:resourceVersion': {}
+            'f:uid': {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: v1
+      time: '2024-03-26T01:41:27Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          'f:phase': {}
+      subresource: status
+spec:
+  capacity:
+    storage: 20Gi
+  nfs:
+    server: 192.168.1.110
+    path: /var/saraswat
+  accessModes:
+    - ReadWriteMany
+  claimRef:
+    kind: PersistentVolumeClaim
+    namespace: default
+    name: esb-config
+    uid: 9b36970c-e3c4-45e1-b99a-f59b6147a92d
+    apiVersion: v1
+    resourceVersion: '777189'
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: sc-saraswat
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  volumeMode: Filesystem
+status:
+  phase: Bound
