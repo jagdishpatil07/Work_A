@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: worker-computation-0
+  namespace: production
+  name: worker-computation-0
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: worker-computation-0
+  template:
+    metadata:
+      labels:
+        service: worker-computation-0
+    spec:
+      containers:
+      - args:
+        - /rqworker/start-computation-0
+        image: revolutio.azurecr.io/revolutio_kubernetes/revolutio:20231101.4
+        name: worker-computation-0
+        envFrom:
+          - configMapRef:
+              name: envs-production-web
+          - configMapRef:
+              name: envs-production-postgres-new
+          - secretRef:
+              name: secrets-production-web
+          - secretRef:
+              name: secrets-production-postgres-new
+        env:
+          - name: DATABASE_URL
+            value: postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(POSTGRES_HOST):$(POSTGRES_PORT)/$(POSTGRES_DB)
+          - name: REDIS_URL
+            value: $(REDIS_URL)
+        resources:
+          requests:
+            cpu: 1
+            memory: 2Gi
+          limits:
+            cpu: 2.0
+            memory: 4Gi
+        volumeMounts:
+          - mountPath: /opt/revolutio/static
+            name: static-azurefile
+          - mountPath: /opt/revolutio/Core/templates/user_defined_template
+            name: templates-azurefile
+          - mountPath: /opt/revolutio/Platform_Configs
+            name: platformconfig-azurefile
+          - mountPath: /opt/revolutio/Computation_Temp_Storage
+            name: computation-storage-azurefile
+      nodeSelector:
+          poolclass: workerpool
+      restartPolicy: Always
+      volumes:
+        - name: static-azurefile
+          persistentVolumeClaim:
+            claimName: static-azurefile
+        - name: templates-azurefile
+          persistentVolumeClaim:
+            claimName: templates-azurefile
+        - name: platformconfig-azurefile
+          persistentVolumeClaim:
+            claimName: platformconfig-azurefile
+        - name: computation-storage-azurefile
+          persistentVolumeClaim:
+            claimName: computation-storage-azurefile
+

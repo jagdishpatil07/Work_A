@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: nginx
+  namespace: production
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: nginx
+  template:
+    metadata:
+      labels:
+        service: nginx
+    spec:
+      containers:
+      - image: nginx:1.17.0
+        name: nginx
+        ports:
+          - name: nginx
+            containerPort: 8080
+        volumeMounts:
+          - mountPath: /etc/nginx
+            name: nginx-conf-azurefile
+          - mountPath: /etc/nginx/conf.d
+            name: nginx-conf-azurefile
+          - mountPath: /var/www/revolutio/media
+            name: media-azurefile1
+      nodeSelector:
+          poolclass: app
+      restartPolicy: Always
+      volumes:
+        - name: nginx-conf-azurefile
+          persistentVolumeClaim:
+            claimName: nginx-conf-azurefile
+        - name: media-azurefile1
+          persistentVolumeClaim:
+            claimName: media-azurefile1
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: production
+  name: nginx
+  labels:
+    service: nginx
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+    name: http
+  selector:
+    service: nginx

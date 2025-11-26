@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: rqscheduler
+  namespace: production
+  name: rqscheduler
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: rqscheduler
+  template:
+    metadata:
+      labels:
+        service: rqscheduler
+    spec:
+      containers:
+      - args:
+        - /app/start
+        image: revolutio.azurecr.io/revolutio_kubernetes/rqscheduler:20230906.1
+        name: rqscheduler
+        ports:
+          - name: rqscheduler
+            containerPort: 8899
+        envFrom:
+          - configMapRef:
+              name: envs-production-web
+        env:
+          - name: REDIS_URL_SCHEDULER
+            value: $(REDIS_URL_SCHEDULER)
+          - name: TZ
+            value: UTC
+        resources: {}
+        volumeMounts:
+          - mountPath: /opt/revolutio/static
+            name: static-azurefile
+          - mountPath: /opt/revolutio/Core/templates/user_defined_template
+            name: templates-azurefile
+          - mountPath: /opt/revolutio/Platform_Configs
+            name: platformconfig-azurefile
+      restartPolicy: Always
+      volumes:
+        - name: static-azurefile
+          persistentVolumeClaim:
+            claimName: static-azurefile
+        - name: templates-azurefile
+          persistentVolumeClaim:
+            claimName: templates-azurefile
+        - name: platformconfig-azurefile
+          persistentVolumeClaim:
+            claimName: platformconfig-azurefile

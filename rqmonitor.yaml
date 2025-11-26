@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: monitor
+  namespace: production
+  name: monitor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: monitor
+  template:
+    metadata:
+      labels:
+        service: monitor
+    spec:
+      containers:
+      - args:
+        - /start
+        image: revolutio.azurecr.io/revolutio_kubernetes/monitor:latest
+        name: monitor
+        ports:
+          - name: monitor
+            containerPort: 8899
+        envFrom:
+          - configMapRef:
+              name: envs-production-web
+        env:
+          - name: REDIS_URL
+            value: $(REDIS_URL)
+        resources: {}
+        volumeMounts:
+          - mountPath: /opt/revolutio/static
+            name: static-azurefile
+          - mountPath: /opt/revolutio/Core/templates/user_defined_template
+            name: templates-azurefile
+          - mountPath: /opt/revolutio/Platform_Configs
+            name: platformconfig-azurefile
+      restartPolicy: Always
+      volumes:
+        - name: static-azurefile
+          persistentVolumeClaim:
+            claimName: static-azurefile
+        - name: templates-azurefile
+          persistentVolumeClaim:
+            claimName: templates-azurefile
+        - name: platformconfig-azurefile
+          persistentVolumeClaim:
+            claimName: platformconfig-azurefile
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: production
+  name: monitor
+  labels:
+    service: monitor
+spec:
+  ports:
+  - port: 9090
+    targetPort: 8899
+    name: http
+  selector:
+    service: monitor

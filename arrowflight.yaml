@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: arrowflight
+  namespace: production
+  name: arrowflight
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: arrowflight
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        service: arrowflight
+    spec:
+      containers:
+      - image: revolutio.azurecr.io/revolutio/arrowflight:20230906.1
+        name: arrowflight
+        resources:
+            requests:
+              cpu: 1.0
+              memory: 4Gi
+            limits:
+              cpu: 2.0
+              memory: 8Gi
+      nodeSelector:
+          poolclass: inmemory
+      restartPolicy: Always
+      volumes: null
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: arrowflight
+  namespace: production
+  name: arrowflight
+spec:
+  ports:
+  - name: "8880"
+    protocol: TCP
+    port: 8815
+  selector:
+    service: arrowflight

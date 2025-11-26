@@ -1,0 +1,176 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: revolutio-ingress
+  annotations:
+    #kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    #nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    cert-manager.io/cluster-issuer: letsencrypt
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/limit-connections: "200"
+    nginx.ingress.kubernetes.io/limit-rps: "500"
+    nginx.ingress.kubernetes.io/proxy-body-size: "20M"
+    nginx.ingress.kubernetes.io/proxy-buffering: "on"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      more_set_headers "server: hide";
+      more_set_headers "Content-Type: text/html; charset=UTF-8";
+      more_set_headers "X-Content-Type-Options: nosniff";
+      more_set_headers "X-Frame-Options: SAMEORIGIN";
+      more_set_headers "X-Xss-Protection: 1; mode=block";
+      more_set_headers "Strict-Transport-Security: max-age=31536000; includeSubDomains; preload";
+      more_set_headers "Cross-Origin-Resource-Policy: same-site";
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - revolutio.digital
+    - "*.revolutio.digital"
+    secretName: wildcard
+  rules:
+  - host: revolutio.digital
+    http:
+      paths:
+      - path: /ws/(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: sockets
+            port:
+              number: 80
+  - host: "*.revolutio.digital"
+    http:
+      paths:
+      - path: /ws/(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: sockets
+            port:
+              number: 80
+  - host: revolutio.digital
+    http:
+      paths:
+      - path: /(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: web
+            port:
+              number: 80
+  - host: "*.revolutio.digital"
+    http:
+      paths:
+      - path: /(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: web
+            port:
+              number: 80
+
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: revolutio-static-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/rewrite-target: /static/$2
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    cert-manager.io/cluster-issuer: letsencrypt
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/limit-connections: "200"
+    nginx.ingress.kubernetes.io/limit-rps: "200"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      more_set_headers "server: hide";
+      more_set_headers "Content-Type: text/html; charset=UTF-8";
+      more_set_headers "X-Content-Type-Options: nosniff";
+      more_set_headers "X-Frame-Options: SAMEORIGIN";
+      more_set_headers "X-Xss-Protection: 1; mode=block";
+      more_set_headers "Strict-Transport-Security: max-age=31536000; includeSubDomains; preload";
+      more_set_headers "Cross-Origin-Resource-Policy: same-site";
+spec:
+  tls:
+  - hosts:
+    - revolutio.digital
+    secretName: wildcard
+  rules:
+  - host: revolutio.digital
+    http:
+      paths:
+      - path: /static(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: web
+            port:
+              number: 80
+  - host: "*.revolutio.digital"
+    http:
+      paths:
+      - path: /static(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: web
+            port:
+              number: 80
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: revolutio-media-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    #nginx.ingress.kubernetes.io/rewrite-target: /media/$2
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    cert-manager.io/cluster-issuer: letsencrypt
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/limit-connections: "200"
+    nginx.ingress.kubernetes.io/limit-rps: "200"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      more_set_headers "server: hide";
+      more_set_headers "Content-Type: text/html; charset=UTF-8";
+      more_set_headers "X-Content-Type-Options: nosniff";
+      more_set_headers "X-Frame-Options: SAMEORIGIN";
+      more_set_headers "X-Xss-Protection: 1; mode=block";
+      more_set_headers "Strict-Transport-Security: max-age=31536000; includeSubDomains; preload";
+      more_set_headers "Cross-Origin-Resource-Policy: same-site";
+spec:
+  tls:
+  - hosts:
+    - revolutio.digital
+    secretName: wildcard
+  rules:
+  - host: revolutio.digital
+    http:
+      paths:
+      - path: /media(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx
+            port:
+              number: 8080
+  - host: "*.revolutio.digital"
+    http:
+      paths:
+      - path: /media(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx
+            port:
+              number: 8080

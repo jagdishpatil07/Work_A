@@ -1,0 +1,106 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: web
+  namespace: production
+  name: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: web
+  template:
+    metadata:
+      labels:
+        service: web
+    spec:
+      containers:
+      - args:
+        - /Installation_ref/scripts/start
+        image: revolutio.azurecr.io/revolutio_kubernetes/revolutio:20230826.2
+        name: web
+        terminationMessagePath: "/tmp/web-log"
+        ports:
+          - name: uvicorn
+            containerPort: 5000
+        envFrom:
+          - configMapRef:
+              name: envs-production-web
+          - configMapRef:
+              name: envs-production-postgres-new
+          - secretRef:
+              name: secrets-production-web
+          - secretRef:
+              name: secrets-production-postgres-new
+        env:
+          - name: DATABASE_URL
+            value: postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(POSTGRES_HOST):$(POSTGRES_PORT)/$(POSTGRES_DB)
+        resources:
+          requests:
+            cpu: 2.0
+            memory: 8Gi
+          limits:
+            cpu: 4.0
+            memory: 16Gi
+        volumeMounts:
+          - mountPath: /opt/revolutio/static
+            name: static-azurefile
+          - mountPath: /opt/revolutio/Core/templates/user_defined_template
+            name: templates-azurefile
+          - mountPath: /opt/revolutio/Platform_Configs
+            name: platformconfig-azurefile
+          - mountPath: /opt/revolutio/Core/media
+            name: media-azurefile1
+          - mountPath: /opt/revolutio/Computation_Temp_Storage
+            name: computation-storage-azurefile
+        livenessProbe:
+          httpGet:
+            path: /healthy
+            port: uvicorn
+          initialDelaySeconds: 120
+          periodSeconds: 240
+          timeoutSeconds: 30
+          failureThreshold: 4
+        readinessProbe:
+          httpGet:
+            path: /readiness
+            port: uvicorn
+          initialDelaySeconds: 120
+          periodSeconds: 240
+          timeoutSeconds: 30
+          failureThreshold: 4
+      nodeSelector:
+          poolclass: apppool
+      restartPolicy: Always
+      volumes:
+        - name: static-azurefile
+          persistentVolumeClaim:
+            claimName: static-azurefile
+        - name: templates-azurefile
+          persistentVolumeClaim:
+            claimName: templates-azurefile
+        - name: platformconfig-azurefile
+          persistentVolumeClaim:
+            claimName: platformconfig-azurefile
+        - name: media-azurefile1
+          persistentVolumeClaim:
+            claimName: media-azurefile1
+        - name: computation-storage-azurefile
+          persistentVolumeClaim:
+            claimName: computation-storage-azurefile
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: production
+  name: web
+  labels:
+    service: web
+spec:
+  ports:
+  - port: 80
+    targetPort: 5000
+    name: http
+  selector:
+    service: web

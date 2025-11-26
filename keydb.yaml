@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: keydb
+  namespace: production
+  name: keydb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: keydb
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        service: keydb
+    spec:
+      containers:
+      - image: revolutio.azurecr.io/revolutio_kubernetes/keydb:20230324.2
+        name: keydb
+        resources:
+            requests:
+              cpu: 1.0
+              memory: 4Gi
+            limits:
+              cpu: 2.0
+              memory: 8Gi
+        command:
+          - keydb-server
+        args: ['--requirepass', '$(KEYDB_PASSWORD)']
+        envFrom:
+          - secretRef:
+              name: secrets-production-redis
+        env:
+          - name: KEYDB_PASSWORD
+            value: $(KEYDB_PASSWORD)
+      nodeSelector:
+          poolclass: inmemory
+      restartPolicy: Always
+      volumes: null
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: keydb
+  namespace: production
+  name: keydb
+spec:
+  ports:
+  - name: "6378"
+    protocol: TCP
+    port: 6379
+  selector:
+    service: keydb
